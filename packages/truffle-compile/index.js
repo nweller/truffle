@@ -38,6 +38,7 @@ var compile = function(sources, options, callback) {
 
   // Load solc module only when compilation is actually required.
   var solc = require("solc");
+  var fastSolc = require("./fast-solc");
   // Clean up after solc.
   var listeners = process.listeners("uncaughtException");
   var solc_listener = listeners[listeners.length - 1];
@@ -104,7 +105,15 @@ var compile = function(sources, options, callback) {
     }
   });
 
-  var result = solc.compileStandard(JSON.stringify(solcStandardInput));
+  var result;
+
+  if (process.env.USE_SOLCJS == 'yes') {
+    console.log("Using standard solcjs...");
+    result = solc.compileStandard(JSON.stringify(solcStandardInput));
+  } else {
+    console.log("Using external solc binary...");
+    result = fastSolc.compile(JSON.stringify(solcStandardInput));
+  }
 
   var standardOutput = JSON.parse(result);
 
