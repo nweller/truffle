@@ -39,8 +39,8 @@ function Config(truffle_directory, working_directory, network) {
     },
     solc: {
       optimizer: {
-        enabled: false,
-        runs: 200
+        enabled: (process.env.SOLC_OPTIMIZE? process.env.SOLC_OPTIMIZE: false),
+        runs: (process.env.SOLC_OPTIMIZE_RUNS? process.env.SOLC_OPTIMIZE_RUNS: 200)
       },
       evmVersion: "byzantium"
     },
