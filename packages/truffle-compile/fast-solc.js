@@ -1,5 +1,7 @@
 const { execSync } = require('child_process');
 
+// TODO Get the new official truffle-externa-compile to work instead of using this
+// custom external invocation
 var compile = function(solcStandardInput) {
     // For now: Write input to temp file, read result from temp file
     const fs = require('fs'); 
